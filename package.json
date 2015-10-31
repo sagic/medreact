@@ -1,0 +1,22 @@
+{
+  "name": "medreact",
+  "version": "1.0.0",
+  "description": "reacting for fun",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sagi chizik",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "react": "^0.14.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.29",
+    "babelify": "^6.4.0",
+    "browserify": "^12.0.0",
+    "nodemon": "^1.8.0",
+    "watchify": "^3.5.0"
+  }
+}
