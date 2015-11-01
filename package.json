@@ -8,8 +8,19 @@
   },
   "author": "sagi chizik",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "dependencies": {
+    "babelify": "^6.4.0",
+    "bootstrap": "^3.3.5",
+    "bootstrap-sass": "^3.3.5",
+    "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "gulp-sass": "^2.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "jquery": "^2.1.4",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
     "react": "^0.14.0"

@@ -6,6 +6,8 @@ var reactify = require('reactify');
 var babelify = require('babelify');
 var watchify = require('watchify');
 var notify = require('gulp-notify');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 
 
 function handleErrors() {
@@ -21,8 +23,8 @@ function buildScript(file, watch) {
 
     var props = {
         entries: ['./scripts/' + file],
-        debug : true,
-        transform:  [babelify, reactify]
+        debug: true,
+        transform: [babelify, reactify]
     };
 
     // watchify() if watch requested, otherwise run browserify() once
@@ -37,7 +39,7 @@ function buildScript(file, watch) {
     }
 
     // listen for an update and run rebundle
-    bundler.on('update', function() {
+    bundler.on('update', function () {
         rebundle();
         gutil.log('Rebundle...');
     });
@@ -46,13 +48,42 @@ function buildScript(file, watch) {
     return rebundle();
 }
 
+var input = './stylesheets/**/*.scss';
+var output = './public/css';
+
+gulp.task('sass', function () {
+    return gulp
+        .src('./styles/importer.scss')
+        .pipe(sass({style: 'expanded', includePaths: ['./styles/**/*'], errLogToConsole: true}))
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./build/client/styles'));
+});
+
+gulp.task('bootstrap', function () {
+    return gulp
+        .src('./node_modules/bootstrap/dist/**/*')
+        .pipe(gulp.dest('./build/client/vendor/bootstrap'));
+});
+
+gulp.task('jquery', function () {
+    return gulp
+        .src('./node_modules/jquery/dist/jquery.min.js')
+        .pipe(gulp.dest('./build/client/vendor/jquery'));
+});
 
 // run once
-gulp.task('scripts', function() {
-    return buildScript('app.js', false);
+gulp.task('scripts', function () {
+    return buildScript('client/app.js', false);
+});
+
+gulp.task('build', ['scripts', 'bootstrap', 'sass', 'jquery'], function () {
+    return buildScript('client/app.js', false);
 });
 
 // run 'scripts' task first, then watch for future changes
-gulp.task('default', ['scripts'], function() {
-    return buildScript('app.js', true);
+gulp.task('default', ['build'], function () {
+    gulp.watch('./styles/**/*.scss', ['sass']);
+    return buildScript('client/app.js', true);
 });
