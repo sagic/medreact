@@ -22,7 +22,7 @@ function handleErrors() {
 function buildScript(file, watch) {
 
     var props = {
-        entries: ['./scripts/' + file],
+        entries: ['./scripts/client/app.js'],
         debug: true,
         transform: [babelify, reactify]
     };
@@ -48,17 +48,20 @@ function buildScript(file, watch) {
     return rebundle();
 }
 
-var input = './stylesheets/**/*.scss';
-var output = './public/css';
-
 gulp.task('sass', function () {
     return gulp
-        .src('./styles/importer.scss')
-        .pipe(sass({style: 'expanded', includePaths: ['./styles/**/*'], errLogToConsole: true}))
+        .src('./assets/styles/importer.scss')
+        .pipe(sass({style: 'expanded', includePaths: ['./assets/styles/**/*'], errLogToConsole: true}))
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest('./build/client/styles'));
+        .pipe(gulp.dest('./build/client/assets/styles'));
+});
+
+gulp.task('images', function () {
+    return gulp
+        .src('./assets/images/**/*')
+        .pipe(gulp.dest('./build/client/assets/images'));
 });
 
 gulp.task('bootstrap', function () {
@@ -73,17 +76,16 @@ gulp.task('jquery', function () {
         .pipe(gulp.dest('./build/client/vendor/jquery'));
 });
 
-// run once
 gulp.task('scripts', function () {
     return buildScript('client/app.js', false);
 });
 
-gulp.task('build', ['scripts', 'bootstrap', 'sass', 'jquery'], function () {
+gulp.task('build', ['scripts', 'bootstrap', 'sass', 'images', 'jquery'], function () {
     return buildScript('client/app.js', false);
 });
 
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['build'], function () {
-    gulp.watch('./styles/**/*.scss', ['sass']);
+    gulp.watch('./assets/styles/**/*.scss', ['sass']);
     return buildScript('client/app.js', true);
 });

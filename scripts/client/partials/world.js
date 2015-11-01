@@ -83,7 +83,7 @@ module.exports = React.createClass({
 
   loadTerrain: function () {
     var terrainLoader = new THREE.TerrainLoader();
-    terrainLoader.load('../../../images/isr1_hm.bin', function (data) {
+    terrainLoader.load('assets/images/isr1_hm.bin', function (data) {
       var rect1 = {w: 1970, h: 1690};
       var d = 5;//intDividers(rect1.w, rect1.h).pop() || 1;
       var rect2 = {w: (rect1.w / d), h: (rect1.h / d)};
