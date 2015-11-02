@@ -13,6 +13,7 @@
     "url": ""
   },
   "dependencies": {
+    "babel": "^5.8.29",
     "babelify": "^6.4.0",
     "bootstrap": "^3.3.5",
     "bootstrap-sass": "^3.3.5",
@@ -25,6 +26,7 @@
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
     "react": "^0.14.0",
+    "react-dom": "^0.14.1",
     "react-router": "v1.0.0-rc3",
     "three": "^0.73.0"
   },

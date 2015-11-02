@@ -22,7 +22,7 @@ function handleErrors() {
 function buildScript(file, watch) {
 
     var props = {
-        entries: ['./scripts/client/app.js'],
+        entries: ['./scripts/client/main.js'],
         debug: true,
         transform: [babelify, reactify]
     };
@@ -76,16 +76,12 @@ gulp.task('jquery', function () {
         .pipe(gulp.dest('./build/client/vendor/jquery'));
 });
 
-gulp.task('scripts', function () {
-    return buildScript('client/app.js', false);
-});
-
-gulp.task('build', ['scripts', 'bootstrap', 'sass', 'images', 'jquery'], function () {
-    return buildScript('client/app.js', false);
+gulp.task('build', ['bootstrap', 'sass', 'images', 'jquery'], function () {
+    return buildScript('client/main.js', false);
 });
 
 // run 'scripts' task first, then watch for future changes
 gulp.task('default', ['build'], function () {
     gulp.watch('./assets/styles/**/*.scss', ['sass']);
-    return buildScript('client/app.js', true);
+    return buildScript('client/main.js', true);
 });
